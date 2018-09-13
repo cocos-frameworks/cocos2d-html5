@@ -192,9 +192,9 @@ ccui.Button = ccui.Widget.extend(/** @lends ccui.Button# */{
     /**
      * Load textures for button.
      * @param {String} normal normal state of texture's filename.
-     * @param {String} selected  selected state of texture's filename.
-     * @param {String} disabled  disabled state of texture's filename.
-     * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} texType
+     * @param {String} [selected]  selected state of texture's filename.
+     * @param {String} [disabled]  disabled state of texture's filename.
+     * @param {ccui.Widget.LOCAL_TEXTURE|ccui.Widget.PLIST_TEXTURE} [texType]
      */
     loadTextures: function (normal, selected, disabled, texType) {
         this.loadTextureNormal(normal, texType);

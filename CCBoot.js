@@ -1123,7 +1123,7 @@ cc.loader = (function () {
 
         /**
          * Load resources then call the callback.
-         * @param {string} resources
+         * @param {string|Array} resources
          * @param {function} [option] callback or trigger
          * @param {function|Object} [loadCallback]
          * @return {cc.AsyncPool}

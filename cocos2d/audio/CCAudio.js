@@ -674,7 +674,7 @@ cc.Audio.WebAudio.prototype = {
         /**
          * Play sound effect.
          * @param {String} url The path of the sound effect with filename extension.
-         * @param {Boolean} loop Whether to loop the effect playing, default value is false
+         * @param {Boolean} [loop] Whether to loop the effect playing, default value is false
          * @return {Number|null} the audio id
          * @example
          * //example

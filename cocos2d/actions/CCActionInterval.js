@@ -1525,7 +1525,7 @@ cc.MoveTo = cc.MoveBy.extend(/** @lends cc.MoveTo# */{
  * @function
  * @param {Number} duration duration in seconds
  * @param {cc.Point|Number} position
- * @param {Number} y
+ * @param {Number} [y]
  * @return {cc.MoveTo}
  * @example
  * // example

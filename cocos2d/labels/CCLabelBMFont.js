@@ -437,7 +437,7 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
     /**
      * Set the text
      * @param {String} newString
-     * @param {Boolean|null} [needUpdateLabel]
+     * @param {Boolean|null} needUpdateLabel
      */
     setString: function (newString, needUpdateLabel) {
         newString = String(newString);

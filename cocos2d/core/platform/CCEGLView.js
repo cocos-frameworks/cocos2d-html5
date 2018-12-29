@@ -995,14 +995,8 @@ cc.ContainerStrategy = cc.Class.extend(/** @lends cc.ContainerStrategy# */{
         locContainer.style.height = locCanvas.style.height = h + 'px';
         // Setup pixel ratio for retina display
         var devicePixelRatio = view._devicePixelRatio = 1;
-
-		// NOTE: modified by me @2018-10-27:begin
-        if (view.isRetinaEnabled()) {
-			//devicePixelRatio = view._devicePixelRatio = Math.min(2, window.devicePixelRatio || 1);
-		}
-		devicePixelRatio = view._devicePixelRatio = window.devicePixelRatio || 1;
-		// NOTE: modified by me @2018-10-27:end
-
+        if (view.isRetinaEnabled())
+            devicePixelRatio = view._devicePixelRatio = Math.min(2, window.devicePixelRatio || 1);
         // Setup canvas
         locCanvas.width = w * devicePixelRatio;
         locCanvas.height = h * devicePixelRatio;

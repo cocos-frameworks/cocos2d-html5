@@ -59,6 +59,8 @@ ccui.linearVerticalLayoutManager = /** @lends ccui.linearVerticalLayoutManager# 
                     var childGravity = layoutParameter.getGravity();
                     var ap = child.getAnchorPoint();
                     var cs = child.getContentSize();
+					cs.width *= child.getScaleX();
+					cs.height *= child.getScaleY();
                     var finalPosX = ap.x * cs.width;
                     var finalPosY = topBoundary - ((1.0 - ap.y) * cs.height);
                     switch (childGravity) {
@@ -103,6 +105,8 @@ ccui.linearHorizontalLayoutManager = /** @lends ccui.linearHorizontalLayoutManag
                     var childGravity = layoutParameter.getGravity();
                     var ap = child.getAnchorPoint();
                     var cs = child.getContentSize();
+					cs.width *= child.getScaleX();
+					cs.height *= child.getScaleY();
                     var finalPosX = leftBoundary + (ap.x * cs.width);
                     var finalPosY = layoutSize.height - (1.0 - ap.y) * cs.height;
                     switch (childGravity) {
@@ -122,7 +126,7 @@ ccui.linearHorizontalLayoutManager = /** @lends ccui.linearHorizontalLayoutManag
                     finalPosX += mg.left;
                     finalPosY -= mg.top;
                     child.setPosition(finalPosX, finalPosY);
-                    leftBoundary = child.getRightBoundary() + mg.right;
+                    leftBoundary = child.getPositionX() + cs.width * (1 - ap.x) + mg.right;
                 }
             }
         }
@@ -212,6 +216,8 @@ ccui.relativeLayoutManager = /** @lends ccui.relativeLayoutManager# */{
         var locWidget = this._widget;
         var ap = locWidget.getAnchorPoint();
         var cs = locWidget.getContentSize();
+		cs.width *= child.getScaleX();
+		cs.height *= child.getScaleY();
 
         this._finalPositionX = 0.0;
         this._finalPositionY = 0.0;

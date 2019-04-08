@@ -730,10 +730,19 @@ cc.loader = (function () {
             s.async = isAsync;
             _jsCache[jsPath] = true;
             if (cc.game.config["noCache"] && typeof jsPath === "string") {
-                if (self._noCacheRex.test(jsPath))
-                    s.src = jsPath + "&_t=" + (new Date() - 0);
-                else
-                    s.src = jsPath + "?_t=" + (new Date() - 0);
+                if (self._noCacheRex.test(jsPath)) {
+                	if (cc.game.config["version"]) {
+						s.src = jsPath + "&_v=" + cc.game.config["version"];
+                    } else {
+						s.src = jsPath + "&_t=" + (new Date() - 0);
+					}
+				} else {
+					if (cc.game.config["version"]) {
+						s.src = jsPath + "?_v=" + cc.game.config["version"];
+					} else {
+						s.src = jsPath + "?_t=" + (new Date() - 0);
+					}
+				}
             } else {
                 s.src = jsPath;
             }
@@ -1074,10 +1083,19 @@ cc.loader = (function () {
             }
 
             if (cc.game.config["noCache"] && typeof realUrl === "string") {
-                if (self._noCacheRex.test(realUrl))
-                    realUrl += "&_t=" + (new Date() - 0);
-                else
-                    realUrl += "?_t=" + (new Date() - 0);
+                if (self._noCacheRex.test(realUrl)) {
+                	if (cc.game.config["version"]) {
+						realUrl += "&_v=" + cc.game.config["version"];
+                    } else {
+						realUrl += "&_t=" + (new Date() - 0);
+					}
+				} else {
+                    if (cc.game.config["version"]) {
+						realUrl += "?_v=" + cc.game.config["version"];
+                    } else {
+						realUrl += "?_t=" + (new Date() - 0);
+					}
+				}
             }
             loader.load(realUrl, url, item, function (err, data) {
                 if (err) {
@@ -2694,12 +2712,12 @@ cc.game = /** @lends cc.game# */{
                 if (_src) {
                     _resPath = /(.*)\//.exec(_src)[0];
                     cc.loader.resPath = _resPath;
-                    _src = cc.path.join(_resPath, 'project.json');
+                    _src = cc.path.join(_resPath, 'project.json?_t=' + (new Date() - 0));
                 }
                 cc.loader.loadTxt(_src, loaded);
             }
             if (!txt) {
-                cc.loader.loadTxt("project.json", loaded);
+                cc.loader.loadTxt("project.json?_t=" + (new Date() - 0), loaded);
             }
         }
     },

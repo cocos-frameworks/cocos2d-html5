@@ -731,14 +731,14 @@ cc.loader = (function () {
             _jsCache[jsPath] = true;
             if (cc.game.config["noCache"] && typeof jsPath === "string") {
                 if (self._noCacheRex.test(jsPath)) {
-                	if (cc.game.config["version"]) {
-						s.src = jsPath + "&_v=" + cc.game.config["version"];
+                	if (typeof getResourceVersion === 'function') {
+						s.src = jsPath + "&_v=" + getResourceVersion(jsPath);
                     } else {
 						s.src = jsPath + "&_t=" + (new Date() - 0);
 					}
 				} else {
-					if (cc.game.config["version"]) {
-						s.src = jsPath + "?_v=" + cc.game.config["version"];
+					if (typeof getResourceVersion === 'function') {
+						s.src = jsPath + "?_v=" + getResourceVersion(jsPath);
 					} else {
 						s.src = jsPath + "?_t=" + (new Date() - 0);
 					}
@@ -1067,7 +1067,7 @@ cc.loader = (function () {
 
             var obj = self.getRes(url);
             if (obj)
-                return cb(null, obj);
+                return cb(null, obj, url);
             var loader = null;
             if (type) {
                 loader = _register[type.toLowerCase()];
@@ -1084,14 +1084,14 @@ cc.loader = (function () {
 
             if (cc.game.config["noCache"] && typeof realUrl === "string") {
                 if (self._noCacheRex.test(realUrl)) {
-                	if (cc.game.config["version"]) {
-						realUrl += "&_v=" + cc.game.config["version"];
+					if (typeof getResourceVersion === 'function') {
+						realUrl += "&_v=" + getResourceVersion(url);
                     } else {
 						realUrl += "&_t=" + (new Date() - 0);
 					}
 				} else {
-                    if (cc.game.config["version"]) {
-						realUrl += "?_v=" + cc.game.config["version"];
+					if (typeof getResourceVersion === 'function') {
+						realUrl += "?_v=" + getResourceVersion(url);
                     } else {
 						realUrl += "?_t=" + (new Date() - 0);
 					}
@@ -1102,10 +1102,10 @@ cc.loader = (function () {
                     cc.log(err);
                     self.cache[url] = null;
                     delete self.cache[url];
-                    cb({status: 520, errorMessage: err}, null);
+                    cb({status: 520, errorMessage: err}, null, url);
                 } else {
                     self.cache[url] = data;
-                    cb(null, data);
+                    cb(null, data, url);
                 }
             });
         },
@@ -1173,8 +1173,10 @@ cc.loader = (function () {
                 function (value, index, AsyncPoolCallback, aPool) {
                     self._loadResIterator(value, index, function (err) {
                         var arr = Array.prototype.slice.call(arguments, 1);
-                        if (option.trigger)
-                            option.trigger.call(option.triggerTarget, arr[0], aPool.size, aPool.finishedSize);   //call trigger
+                        if (option.trigger) {
+                            var url = arr[1];
+							option.trigger.call(option.triggerTarget, arr[0], aPool.size, aPool.finishedSize, url);   //call trigger
+						}
                         AsyncPoolCallback(err, arr[0]);
                     });
                 },

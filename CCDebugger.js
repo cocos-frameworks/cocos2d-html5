@@ -328,6 +328,32 @@ cc._initDebugSetting = function (mode) {
             cc.warn = Function.prototype.bind.call(console.warn, console);
         if (mode === ccGame.DEBUG_MODE_INFO)
             cc.log = Function.prototype.bind.call(console.log, console);
+        // FIXME: 方便用于查找bug时使用的 cc.log
+        cc.log = function (msg) {
+			if (msg) {
+				for (var i = 1; i < arguments.length; i++)
+					msg = msg.replace(/(%s)|(%d)/, cc._formatString(arguments[i]));
+				var fmt = "yyyy/MM/dd hh:mm:ss.S";
+				var d = new Date();
+				var o = {
+					"M+": d.getMonth() + 1,
+					"d+": d.getDate(),
+					"h+": d.getHours(),
+					"m+": d.getMinutes(),
+					"s+": d.getSeconds(),
+					"S": d.getMilliseconds()
+				};
+				if (/(y+)/.test(fmt)) {
+					fmt = fmt.replace(RegExp.$1, (d.getFullYear() + "").substr(4 - RegExp.$1.length));
+				}
+				for (var k in o) {
+					if (new RegExp("(" + k + ")").test(fmt)) {
+						fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length === 1 ? "000" : "00")+ o[k]).substr(("" + o[k]).length));
+					}
+				}
+				console.log("[%s] %s", fmt, msg);
+			}
+		}
     }
 };
 //+++++++++++++++++++++++++something about log end+++++++++++++++++++++++++++++

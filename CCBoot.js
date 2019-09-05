@@ -1074,7 +1074,7 @@ cc.loader = (function () {
             }
             if (!loader) {
                 cc.error("loader for [" + type + "] doesn't exist!");
-                return cb();
+                return cb({status: 500, errorMessage: "loader not found"}, null, url);
             }
             var realUrl = url;
             if (!_urlRegExp.test(url)) {

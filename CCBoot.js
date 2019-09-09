@@ -1118,7 +1118,14 @@ cc.loader = (function () {
          * @returns {*}
          */
         getUrl: function (basePath, url) {
-            var self = this, path = cc.path;
+            if (window.MINI_GAME === "fbinstant") {
+                if (url.slice(0, 5) !== "http:" && url.slice(0, 6) !== "https:") {
+                    if (window.REMOTE_SERVER_ROOT) {
+                        return window.REMOTE_SERVER_ROOT + url;
+                    }
+                }
+            }
+			var self = this, path = cc.path;
             if (basePath !== undefined && url === undefined) {
                 url = basePath;
                 var type = path.extname(url);

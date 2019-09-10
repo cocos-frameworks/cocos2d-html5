@@ -729,16 +729,16 @@ cc.loader = (function () {
             var d = document, self = this, s = document.createElement('script');
             s.async = isAsync;
             _jsCache[jsPath] = true;
-            if (cc.game.config["noCache"] && typeof jsPath === "string") {
-                if (self._noCacheRex.test(jsPath)) {
-                	if (typeof getResourceVersion === 'function') {
-						s.src = jsPath + "&_v=" + getResourceVersion(jsPath);
-                    } else {
-						s.src = jsPath + "&_t=" + (new Date() - 0);
-					}
+            if (typeof jsPath === "string") {
+				var resVersion = "";
+				if (typeof getResourceVersion === 'function') {
+					resVersion = getResourceVersion(jsPath);
+				}
+				if (resVersion) {
+					s.src = resVersion;
 				} else {
-					if (typeof getResourceVersion === 'function') {
-						s.src = jsPath + "?_v=" + getResourceVersion(jsPath);
+					if (self._noCacheRex.test(jsPath)) {
+						s.src = jsPath + "&_t=" + (new Date() - 0);
 					} else {
 						s.src = jsPath + "?_t=" + (new Date() - 0);
 					}
@@ -1082,17 +1082,17 @@ cc.loader = (function () {
                 realUrl = self.getUrl(basePath, url);
             }
 
-            if (cc.game.config["noCache"] && typeof realUrl === "string") {
-                if (self._noCacheRex.test(realUrl)) {
-					if (typeof getResourceVersion === 'function') {
-						realUrl += "&_v=" + getResourceVersion(url);
-                    } else {
-						realUrl += "&_t=" + (new Date() - 0);
-					}
+            if (typeof realUrl === "string") {
+				var resVersion = "";
+				if (typeof getResourceVersion === 'function') {
+					resVersion = getResourceVersion(url);
+				}
+				if (resVersion) {
+					realUrl = resVersion;
 				} else {
-					if (typeof getResourceVersion === 'function') {
-						realUrl += "?_v=" + getResourceVersion(url);
-                    } else {
+					if (self._noCacheRex.test(realUrl)) {
+						realUrl += "&_t=" + (new Date() - 0);
+					} else {
 						realUrl += "?_t=" + (new Date() - 0);
 					}
 				}

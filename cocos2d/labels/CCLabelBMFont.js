@@ -371,6 +371,7 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
                 fontChar._newTextureWhenChangeColor = true;
                 this.addChild(fontChar, 0, i);
             } else {
+                fontChar.setTexture(locTexture);
                 cmd._updateCharTexture(fontChar, rect, key, isRotated);
             }
 
@@ -393,9 +394,9 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
 
         //If the last character processed has an xAdvance which is less that the width of the characters image, then we need
         // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding box
-        if (fontDef && fontDef.xAdvance < fontDef.rect.width)
-            tmpSize.width = longestLine - fontDef.xAdvance + fontDef.rect.width;
-        else
+        //if (fontDef && fontDef.xAdvance < fontDef.rect.width)
+            //tmpSize.width = longestLine - fontDef.xAdvance + fontDef.rect.width;
+        //else
             tmpSize.width = longestLine;
         tmpSize.height = totalHeight;
         self.setContentSize(cc.sizePixelsToPoints(tmpSize));

@@ -731,8 +731,8 @@ cc.loader = (function () {
             _jsCache[jsPath] = true;
             if (typeof jsPath === "string") {
 				var resVersion = "";
-				if (typeof getResourceVersion === 'function') {
-					resVersion = getResourceVersion(jsPath);
+				if (typeof getVersionedResource === 'function') {
+					resVersion = getVersionedResource(jsPath);
 				}
 				if (resVersion) {
 					s.src = resVersion;
@@ -797,6 +797,7 @@ cc.loader = (function () {
          * @param {function} [cb] arguments are : err, txt
          */
         loadTxt: function (url, cb) {
+            url = cc.loader.getUrl('', url);
             if (!cc._isNodeJs) {
                 var xhr = this.getXMLHttpRequest(),
                     errInfo = "load " + url + " failed!";
@@ -958,6 +959,7 @@ cc.loader = (function () {
          * @returns {Image}
          */
         loadImg: function (url, option, callback, img) {
+			url = cc.loader.getUrl('', url);
             var opt = {
                 isCrossOrigin: true
             };
@@ -1084,8 +1086,8 @@ cc.loader = (function () {
 
             if (typeof realUrl === "string") {
 				var resVersion = "";
-				if (typeof getResourceVersion === 'function') {
-					resVersion = getResourceVersion(url);
+				if (typeof getVersionedResource === 'function') {
+					resVersion = getVersionedResource(url);
 				}
 				if (resVersion) {
 					realUrl = resVersion;

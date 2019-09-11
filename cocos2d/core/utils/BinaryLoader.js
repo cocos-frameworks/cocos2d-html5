@@ -34,6 +34,7 @@
 
 cc.loader.loadBinary = function (url, cb) {
     var self = this;
+    url = cc.loader.getUrl('', url);
     var xhr = this.getXMLHttpRequest(),
         errInfo = "load " + url + " failed!";
     xhr.open("GET", url, true);
@@ -77,6 +78,7 @@ cc.loader._str2Uint8Array = function (strData) {
  */
 cc.loader.loadBinarySync = function (url) {
     var self = this;
+    url = cc.loader.getUrl('', url);
     var req = this.getXMLHttpRequest();
     req.timeout = 0;
     var errInfo = "load " + url + " failed!";

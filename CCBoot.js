@@ -1813,6 +1813,14 @@ var _initSys = function () {
     else if (isAndroid) osName = sys.OS_ANDROID;
     else if (nav.appVersion.indexOf("Linux") !== -1) osName = sys.OS_LINUX;
 
+	if (FBInstant && window.MINI_GAME === "fbinstant") {
+		if (FBInstant.getPlatform() === "IOS") {
+			osName = sys.OS_IOS;
+		} else if (FBInstant.getPlatform() === "ANDROID") {
+			osName = sys.OS_ANDROID;
+		}
+	}
+
     /**
      * Indicate the running os name
      * @memberof cc.sys

@@ -436,7 +436,25 @@ ccui.VideoPlayer.EventType = {
         this._video.style["-webkit-transform"] = matrix;
     };
 
+	var _noCacheRex = /\?/;
     proto.updateURL = function (path) {
+		if (typeof path === "string") {
+			var resVersion = "";
+			if (typeof getVersionedResource === 'function') {
+				resVersion = getVersionedResource(path);
+			}
+			if (resVersion) {
+				path = resVersion;
+			} else {
+				if (_noCacheRex.test(path)) {
+					path += "&_t=" + (new Date() - 0);
+				} else {
+					path += "?_t=" + (new Date() - 0);
+				}
+			}
+		}
+		path = cc.loader.getUrl('', path);
+
         var source, video, hasChild, container, extname;
         var node = this._node;
 

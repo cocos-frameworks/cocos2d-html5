@@ -1582,28 +1582,30 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
         particle.pos.y = this._sourcePosition.y + this._posVar.y * locRandomMinus11();
 
         // Color
-        var start, end;
         var locStartColor = this._startColor, locStartColorVar = this._startColorVar;
         var locEndColor = this._endColor, locEndColorVar = this._endColorVar;
-        start = {
-            r: cc.clampf(locStartColor.r + locStartColorVar.r * locRandomMinus11(), 0, 255),
-            g: cc.clampf(locStartColor.g + locStartColorVar.g * locRandomMinus11(), 0, 255),
-            b: cc.clampf(locStartColor.b + locStartColorVar.b * locRandomMinus11(), 0, 255),
-            a: cc.clampf(locStartColor.a + locStartColorVar.a * locRandomMinus11(), 0, 255)
-        };
-        end = {
-            r: cc.clampf(locEndColor.r + locEndColorVar.r * locRandomMinus11(), 0, 255),
-            g: cc.clampf(locEndColor.g + locEndColorVar.g * locRandomMinus11(), 0, 255),
-            b: cc.clampf(locEndColor.b + locEndColorVar.b * locRandomMinus11(), 0, 255),
-            a: cc.clampf(locEndColor.a + locEndColorVar.a * locRandomMinus11(), 0, 255)
-        };
+		var sR = cc.clampf(locStartColor.r + locStartColorVar.r * locRandomMinus11(), 0, 255);
+		var sG = cc.clampf(locStartColor.g + locStartColorVar.g * locRandomMinus11(), 0, 255);
+		var sB = cc.clampf(locStartColor.b + locStartColorVar.b * locRandomMinus11(), 0, 255);
+		var sA = cc.clampf(locStartColor.a + locStartColorVar.a * locRandomMinus11(), 0, 255);
+		var eR = cc.clampf(locEndColor.r + locEndColorVar.r * locRandomMinus11(), 0, 255);
+		var eG = cc.clampf(locEndColor.g + locEndColorVar.g * locRandomMinus11(), 0, 255);
+		var eB = cc.clampf(locEndColor.b + locEndColorVar.b * locRandomMinus11(), 0, 255);
+		var eA = cc.clampf(locEndColor.a + locEndColorVar.a * locRandomMinus11(), 0, 255);
 
-        particle.color = start;
+		if (!particle.color) {
+		    particle.color = {r: sR, g: sG, b: sB, a: sA};
+        } else {
+			particle.color.r = sR;
+			particle.color.g = sG;
+			particle.color.b = sB;
+			particle.color.a = sA;
+		}
         var locParticleDeltaColor = particle.deltaColor, locParticleTimeToLive = particle.timeToLive;
-        locParticleDeltaColor.r = (end.r - start.r) / locParticleTimeToLive;
-        locParticleDeltaColor.g = (end.g - start.g) / locParticleTimeToLive;
-        locParticleDeltaColor.b = (end.b - start.b) / locParticleTimeToLive;
-        locParticleDeltaColor.a = (end.a - start.a) / locParticleTimeToLive;
+        locParticleDeltaColor.r = (eR - sR) / locParticleTimeToLive;
+        locParticleDeltaColor.g = (eG - sG) / locParticleTimeToLive;
+        locParticleDeltaColor.b = (eB - sB) / locParticleTimeToLive;
+        locParticleDeltaColor.a = (eA - sA) / locParticleTimeToLive;
 
         // size
         var startS = this.startSize + this.startSizeVar * locRandomMinus11();

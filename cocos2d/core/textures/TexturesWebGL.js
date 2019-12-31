@@ -421,6 +421,8 @@ cc._tmp.WebGLTexture2D = function () {
         initWithElement: function (element) {
             if (!element)
                 return;
+			if (this._webTextureObj)
+				cc._renderContext.deleteTexture(this._webTextureObj);
             this._webTextureObj = cc._renderContext.createTexture();
             this._htmlElementObj = element;
             this._textureLoaded = true;
